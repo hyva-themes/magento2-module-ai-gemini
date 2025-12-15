@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <hyva_ai>
+            <gemini>
+                <model>gemini-1.5-flash</model>
+                <temperature>0.7</temperature>
+                <max_tokens>4000</max_tokens>
+            </gemini>
+        </hyva_ai>
+    </default>
+</config>

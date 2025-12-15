@@ -1,0 +1,21 @@
+{
+  "name": "hyva-themes/module-ai-gemini",
+  "description": "Hyva_AiGemini module",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*"
+  },
+  "authors": [{
+      "name": "Hyvä Themes B.V.",
+      "email": "info@hyva.io"
+  }],
+  "license": "see LICENSE.md",
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "Hyva\\AiGemini\\": "src/"
+    }
+  }
+}
