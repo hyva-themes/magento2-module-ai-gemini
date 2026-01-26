@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Hyva\AiGemini\Model\Provider;
 
+use Hyva\Ai\Api\ProviderConfigInterface;
 use Hyva\Ai\Api\ProviderInterface;
 use Hyva\AiGemini\Model\Client;
 use Magento\Framework\Exception\LocalizedException;
@@ -16,7 +17,8 @@ use Magento\Framework\Exception\LocalizedException;
 class GeminiProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly Client $client
+        private readonly Client $client,
+        private readonly ProviderConfigInterface $providerConfig
     ) {
     }
 
@@ -27,9 +29,9 @@ class GeminiProvider implements ProviderInterface
             throw new LocalizedException(__('Messages are required for Gemini processing.'));
         }
 
-        $model = $options['model'] ?? 'gemini-1.5-flash';
-        $temperature = $options['temperature'] ?? 0.7;
-        $maxTokens = $options['max_tokens'] ?? 4000;
+        $model = $options['model'] ?? $this->providerConfig->getDefaultModel();
+        $temperature = $options['temperature'] ?? $this->providerConfig->getDefaultTemperature();
+        $maxTokens = $options['max_tokens'] ?? $this->providerConfig->getDefaultMaxTokens();
 
         $responses = [];
 
@@ -61,6 +63,6 @@ class GeminiProvider implements ProviderInterface
 
     public function getName(): string
     {
-        return 'gemini';
+        return $this->providerConfig->getProviderName();
     }
 }

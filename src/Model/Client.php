@@ -9,17 +9,16 @@ declare(strict_types=1);
 
 namespace Hyva\AiGemini\Model;
 
+use Hyva\Ai\Api\ProviderConfigInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\HTTP\Client\Curl;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Encryption\EncryptorInterface;
-use Psr\Log\LoggerInterface;
 
 class Client
 {
-    private const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/models/%s:generateContent';
-    private const DEFAULT_MODEL = 'gemini-1.5-flash';
+    private const DEFAULT_API_URL = 'https://generativelanguage.googleapis.com/v1/models/%s:generateContent';
     private const CONFIG_PATH_API_KEY = 'hyva_ai/gemini/api_key';
 
     public function __construct(
@@ -27,7 +26,8 @@ class Client
         private Curl $curl,
         private Json $json,
         private EncryptorInterface $encryptor,
-        private LoggerInterface $logger
+        private ProviderConfigInterface $providerConfig,
+        private string $apiUrl = self::DEFAULT_API_URL
     ) {
     }
 
@@ -36,16 +36,19 @@ class Client
      */
     public function generateContent(
         array $messages,
-        string $model = self::DEFAULT_MODEL,
-        float $temperature = 0.7,
-        int $maxTokens = 4000
+        ?string $model = null,
+        ?float $temperature = null,
+        ?int $maxTokens = null
     ): array {
+        $model = $model ?? $this->providerConfig->getDefaultModel();
+        $temperature = $temperature ?? $this->providerConfig->getDefaultTemperature();
+        $maxTokens = $maxTokens ?? $this->providerConfig->getDefaultMaxTokens();
         $apiKey = $this->getApiKey();
         if (!$apiKey) {
             throw new LocalizedException(__('Gemini API key is not configured.'));
         }
 
-        $url = sprintf(self::GEMINI_API_URL, $model) . '?key=' . $apiKey;
+        $url = sprintf($this->apiUrl, $model) . '?key=' . $apiKey;
 
         $this->curl->addHeader('Content-Type', 'application/json');
 

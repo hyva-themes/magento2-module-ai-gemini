@@ -8,11 +8,62 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <!-- Register Gemini provider -->
-    <type name="Hyva\Ai\Controller\Adminhtml\Ai\Process">
+    <type name="Hyva\Ai\Model\ProviderPool">
         <arguments>
             <argument name="providers" xsi:type="array">
                 <item name="gemini" xsi:type="object">Hyva\AiGemini\Model\Provider\GeminiProvider</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\AiGemini\Model\Client">
+        <arguments>
+            <argument name="providerConfig" xsi:type="object">Hyva\AiGemini\Model\ProviderConfig</argument>
+            <argument name="apiUrl" xsi:type="string">https://generativelanguage.googleapis.com/v1/models/%s:generateContent</argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\AiGemini\Model\Provider\GeminiProvider">
+        <arguments>
+            <argument name="providerConfig" xsi:type="object">Hyva\AiGemini\Model\ProviderConfig</argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\AiGemini\Model\Provider\OptionsSchema">
+        <arguments>
+            <argument name="providerConfig" xsi:type="object">Hyva\AiGemini\Model\ProviderConfig</argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\Ai\Model\ProviderResolver">
+        <arguments>
+            <argument name="providerModels" xsi:type="array">
+                <item name="gemini" xsi:type="array">
+                    <item name="source_model" xsi:type="string">Hyva\AiGemini\Model\Config\Source\Model</item>
+                    <item name="label" xsi:type="string">gemini</item>
+                    <item name="options" xsi:type="array">
+                        <item name="gemini-2.5-pro" xsi:type="array">
+                            <item name="value" xsi:type="string">gemini-2.5-pro</item>
+                            <item name="label" xsi:type="string">Gemini 2.5 Pro</item>
+                        </item>
+                        <item name="gemini-2.5-flash" xsi:type="array">
+                            <item name="value" xsi:type="string">gemini-2.5-flash</item>
+                            <item name="label" xsi:type="string">Gemini 2.5 Flash</item>
+                        </item>
+                        <item name="gemini-2.5-flash-lite" xsi:type="array">
+                            <item name="value" xsi:type="string">gemini-2.5-flash-lite</item>
+                            <item name="label" xsi:type="string">Gemini 2.5 Flash Lite</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Hyva\Ai\Model\Provider\OptionsSchemaPool">
+        <arguments>
+            <argument name="schemas" xsi:type="array">
+                <item name="gemini" xsi:type="object">Hyva\AiGemini\Model\Provider\OptionsSchema</item>
             </argument>
         </arguments>
     </type>

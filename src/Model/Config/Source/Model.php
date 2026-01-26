@@ -14,15 +14,18 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Model implements OptionSourceInterface
 {
     /**
+     * @param array $options
+     */
+    public function __construct(
+        private readonly array $options
+    ) {
+    }
+
+    /**
      * Return array of options as value-label pairs
      */
     public function toOptionArray(): array
     {
-        return [
-            ['value' => 'gemini-2.0-flash', 'label' => 'Gemini 2.0 Flash'],
-            ['value' => 'gemini-2.0-flash-lite', 'label' => 'Gemini 2.0 Flash Lite'],
-            ['value' => 'gemini-2.5-flash', 'label' => 'Gemini 2.5 Flash'],
-            ['value' => 'gemini-2.5-flash-lite', 'label' => 'Gemini 2.5 Flash Lite'],
-        ];
+        return $this->options;
     }
 }
