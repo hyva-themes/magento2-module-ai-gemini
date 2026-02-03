@@ -11,6 +11,7 @@
     <module name="Hyva_AiGemini">
         <sequence>
             <module name="Hyva_Ai"/>
+            <module name="Magento_Config"/>
         </sequence>
     </module>
 </config>

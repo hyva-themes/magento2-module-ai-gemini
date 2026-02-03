@@ -1,0 +1,10 @@
+"Controls randomness for translations (0.0 - 2.0, recommended: %1)","Controls randomness for translations (0.0 - 2.0, recommended: %1)"
+"Gemini API key is not configured.","Gemini API key is not configured."
+"Gemini API request failed: %1","Gemini API request failed: %1"
+"Get your API key from <a href=""https://aistudio.google.com/app/apikey"" target=""_blank"">Google AI Studio</a>","Get your API key from <a href=""https://aistudio.google.com/app/apikey"" target=""_blank"">Google AI Studio</a>"
+"Google Gemini Configuration","Google Gemini Configuration"
+"Invalid response from Gemini API","Invalid response from Gemini API"
+"Max Tokens","Max Tokens"
+"Maximum tokens for translation responses","Maximum tokens for translation responses"
+"Messages are required for Gemini processing.","Messages are required for Gemini processing."
+Temperature,Temperature
