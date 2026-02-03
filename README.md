@@ -22,4 +22,5 @@ The `Hyva_AiGemini` modules implements Google's Gemini AI API utilizing the `Hyv
 1. Run `bin/magento setup:upgrade`
 
 ## Documentation
-Coming soon.
+
+[https://docs.hyva.io/hyva-themes/ai/features-providers/index.html](https://docs.hyva.io/hyva-themes/ai/features-providers/index.html)
