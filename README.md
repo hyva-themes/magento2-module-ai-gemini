@@ -24,3 +24,10 @@ The `Hyva_AiGemini` modules implements Google's Gemini AI API utilizing the `Hyv
 ## Documentation
 
 [https://docs.hyva.io/hyva-themes/ai/features-providers/index.html](https://docs.hyva.io/hyva-themes/ai/features-providers/index.html)
+
+## License
+
+This package is licensed under the **Open Software License (OSL 3.0)**.
+
+* **Copyright:** Copyright © 2020-present Hyvä Themes. All rights reserved.
+* **License Text:** The full text of the OSL 3.0 license can be found in the `LICENSE.txt` file within this package, and is also available online at [http://opensource.org/licenses/osl-3.0.php](http://opensource.org/licenses/osl-3.0.php).

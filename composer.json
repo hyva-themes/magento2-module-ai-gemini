@@ -11,7 +11,7 @@
       "name": "Hyvä Themes B.V.",
       "email": "info@hyva.io"
   }],
-  "license": "see LICENSE.md",
+  "license": "OSL-3.0",
   "autoload": {
     "files": [
       "src/registration.php"
