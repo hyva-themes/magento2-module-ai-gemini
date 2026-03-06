@@ -42,14 +42,9 @@ class GeminiProvider implements ProviderInterface
                 continue;
             }
 
-            try {
-                $response = $this->client->generateContent($messages, $model, $temperature, $maxTokens);
-                $content = $this->client->extractContent($response);
-                $responses[] = $content;
-            } catch (\Exception $e) {
-                $responses[] = $e->getMessage();
-                continue;
-            }
+            $response = $this->client->generateContent($messages, $model, $temperature, $maxTokens);
+            $content = $this->client->extractContent($response);
+            $responses[] = $content;
         }
 
         return ['responses' => $responses];

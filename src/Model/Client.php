@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Hyva\AiGemini\Model;
 
 use Hyva\Ai\Api\ProviderConfigInterface;
+use Hyva\Ai\Model\ConcurrencyGuard;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\HTTP\Client\Curl;
@@ -51,6 +52,13 @@ class Client
 
         $this->curl->addHeader('Content-Type', 'application/json');
 
+        $timeout = (int) ($this->scopeConfig->getValue(
+            ConcurrencyGuard::XML_PATH_REQUEST_TIMEOUT_SECONDS
+        ) ?? 0);
+        if ($timeout > 0) {
+            $this->curl->setTimeout($timeout);
+        }
+
         // Convert OpenAI-style messages to Gemini format
         $contents = $this->convertMessagesToGeminiFormat($messages);
 
@@ -62,7 +70,18 @@ class Client
             ]
         ];
 
-        $this->curl->post($url, $this->json->serialize($requestData));
+        try {
+            $this->curl->post($url, $this->json->serialize($requestData));
+        } catch (\Throwable $e) {
+            $msg = $e->getMessage();
+            if (stripos($msg, 'timed out') !== false || stripos($msg, 'timeout') !== false) {
+                $timeoutMessage = $timeout > 0
+                    ? __('The request to the AI provider timed out after %1 seconds. Try again or increase the timeout in Stores > Configuration > Hyvä AI > Runtime.', $timeout)
+                    : __('The request to the AI provider timed out. Try again or set a timeout in Stores > Configuration > Hyvä AI > Runtime.');
+                throw new LocalizedException($timeoutMessage);
+            }
+            throw new LocalizedException(__('Gemini API request failed: %1', $msg), $e);
+        }
 
         $responseBody = $this->curl->getBody();
         $httpStatus = $this->curl->getStatus();
