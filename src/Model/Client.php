@@ -148,6 +148,7 @@ class Client
             if (isset($errorData['error']) && is_string($errorData['error'])) {
                 return $errorData['error'];
             }
+        // phpcs:ignore Magento2.CodeAnalysis.EmptyBlock.DetectedCatch
         } catch (\Exception $e) {
             // If we can't parse the error, fall through to default message
         }
